@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import DonutChart from '../Template/DonutChart';
+import DragAndDrop from '../../components/DragAndDrop';
+
 
 const Home: React.FC = () => {
   const [tasks, setTasks] = useState<{ label: string; value: number }[]>([]);
@@ -53,7 +55,10 @@ const Home: React.FC = () => {
           <button onClick={addTask}>Add Task</button>
         </div>
 
-        <DonutChart tasks={tasks} />
+        <DonutChart tasks={tasks} setTasks={setTasks} />
+
+        <DragAndDrop></DragAndDrop>
+
       </div>
     </>
   );
