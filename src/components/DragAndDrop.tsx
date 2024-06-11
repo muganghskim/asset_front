@@ -47,6 +47,7 @@ const DragAndDrop: React.FC = () => {
   
     const closeModal = () => {
       setShowModal(false);
+      setNewPrice('');
     };
   
     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +58,7 @@ const DragAndDrop: React.FC = () => {
       if (!selectedItem || newPrice === '') return;
       const updatedItems = items.map((item: any) => {
         if (item.id === selectedItem.id) {
-          return { ...item, price: parseFloat(newPrice) };
+          return { ...item, price: parseInt(newPrice) };
         }
         return item;
       });
