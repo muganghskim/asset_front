@@ -7,10 +7,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface DonutChartProps {
   tasks: { label: string; value: number }[];
-  setTasks: () => void;
 }
 
-const DonutChart: React.FC<DonutChartProps> = ({ tasks, setTasks }) => {
+const DonutChart: React.FC<DonutChartProps> = ({ tasks }) => {
 
   // 툴팁 유지를 위한 useRef -> datalables 사용 후 폐기됨
   const chartRef = useRef<ChartJS<'doughnut'> | null>(null);
@@ -24,7 +23,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks, setTasks }) => {
   }, [tasks]);
 
   // 도넛 차트에 추가될 데이터
-  const data = {
+  const data: any = {
     labels: tasks.map(task => task.label),
     datasets: [
       {
@@ -52,7 +51,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks, setTasks }) => {
   };
 
   // 도넛 차트 속성 적용
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
       // 태그 속성
@@ -72,6 +71,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks, setTasks }) => {
           size: 20, // 텍스트 크기 조정
         },
       },
+      
       // 데이터 레이블로 툴팁 대체
       datalabels: {
         display: true,
@@ -237,26 +237,14 @@ function numberToKorean(number: any){
 // }
 
 
-  const handleDeleteTask = (taskIndex: number) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.splice(taskIndex, 1);
-    setTasks(updatedTasks);
-  };
+  
   
 
   return (
     <div className="w-1/2 h-1/2">
         {/* 도넛 차트에 각종 데이터, 속성, 플러그인 주입 */}
-        <Doughnut ref={chartRef} data={data} options={options} plugins={[ChartDataLabels]} />
+        <Doughnut ref={chartRef} data={data} options={options} plugins={[ChartDataLabels as any]} />
         <div>총합: {numberToKorean(totalValue)}원</div>
-        <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task.label}: {task.value}원
-            <button onClick={() => handleDeleteTask(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
     </div>
     )
 };

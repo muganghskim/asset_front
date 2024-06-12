@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DonutChart from '../Template/DonutChart';
 import DragAndDrop from '../../components/DragAndDrop';
+import LineChart from '../Template/LineChart';
 
 
 const Home: React.FC = () => {
@@ -8,6 +9,7 @@ const Home: React.FC = () => {
   const [taskName, setTaskName] = useState('');
   const [taskValue, setTaskValue] = useState<string>('');
   const taskOptions = ['Task 1', 'Task 2', 'Task 3']; // 셀렉트 옵션으로 사용할 작업들
+  
 
   const addTask = () => {
     const value = parseFloat(taskValue);
@@ -28,6 +30,13 @@ const Home: React.FC = () => {
 
     setTaskName('');
     setTaskValue('');
+  };
+
+  const handleDeleteTask = (taskIndex: number) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(taskIndex, 1);
+    setTasks(updatedTasks);
+    
   };
 
   return (
@@ -55,9 +64,22 @@ const Home: React.FC = () => {
           <button onClick={addTask}>Add Task</button>
         </div>
 
-        <DonutChart tasks={tasks} setTasks={setTasks} />
+        <DonutChart tasks={tasks} />
+
+        <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task.label}: {task.value}원
+            <button onClick={() => handleDeleteTask(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
 
         <DragAndDrop></DragAndDrop>
+        <div>
+        {/* LineChart 컴포넌트 사용 */}
+        <LineChart />
+      </div>
 
       </div>
     </>
