@@ -27,7 +27,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks }) => {
     labels: tasks.map(task => task.label),
     datasets: [
       {
-        label: 'Tasks',
+        // label: tasks.map(task => task.label),
         data: tasks.map(task => task.value),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -36,6 +36,12 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks }) => {
           'rgba(75, 192, 192, 0.2)',
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 71, 0.2)',
+          'rgba(60, 179, 113, 0.2)',
+          'rgba(255, 215, 0, 0.2)',
+          'rgba(138, 43, 226, 0.2)',
+          'rgba(0, 191, 255, 0.2)',
+          'rgba(240, 128, 128, 0.2)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -44,6 +50,12 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks }) => {
           'rgba(75, 192, 192, 1)',
           'rgba(153, 102, 255, 1)',
           'rgba(255, 159, 64, 1)',
+          'rgba(255, 99, 71, 1)',
+          'rgba(60, 179, 113, 1)',
+          'rgba(255, 215, 0, 1)',
+          'rgba(138, 43, 226, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(240, 128, 128, 1)',
         ],
         borderWidth: 1,
       },
@@ -77,13 +89,20 @@ const DonutChart: React.FC<DonutChartProps> = ({ tasks }) => {
         display: true,
         color: 'black',
         formatter: (value: any, context: any) => {
-            // 데이터 라벨을 설정하는 코드를 여기에 추가
-            const percentage = ((value / totalValue) * 100).toFixed(1);
-            return `${context.dataset.label}: ${numberToKorean(parseInt(value))}원 (${percentage}%)`; // 예시 코드
+          const percentage = ((value / totalValue) * 100).toFixed(1);
+          const label = context.chart.data.labels[context.dataIndex];
+          return `${label}: ${numberToKorean(parseInt(value))}원 (${percentage}%)`;
         }
       },
       // 툴팁 속성 폐기
       tooltip: {
+        // callbacks: {
+        //   label: function(context: any) {
+        //     const label = context.dataset.label || '';
+        //     const value = context.raw || 0;
+        //     return `${label}: ${value}원`;
+        //   }
+        // },
         enabled: false, // 툴팁 비활성화
         // mode: 'point', // 또는 'point'
         // intersect: null, // 클릭 이벤트에 대해 툴팁 표시 비활성화
